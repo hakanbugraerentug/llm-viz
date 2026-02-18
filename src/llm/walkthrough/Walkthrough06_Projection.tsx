@@ -19,11 +19,11 @@ export function walkthrough06_Projection(args: IWalkthroughArgs) {
 
     commentary(wt, null, 0)`
 
-After the self-attention process, we have outputs from each of the heads. These outputs are the
-appropriately mixed V vectors, influenced by the Q and K vectors.
+Self-attention sürecinden sonra, head'lerin her birinden çıktılarımız var. Bu çıktılar,
+Q ve K vektörlerinin etkisiyle uygun şekilde karıştırılmış V vektörleridir.
 
-To combine the ${c_blockRef('output vectors', outBlocks)} from each head, we simply stack them on top of each other. So, for time
-${c_dimRef('t = 4', DimStyle.T)}, we go from 3 vectors of length ${c_dimRef('A = 16', DimStyle.A)} to 1 vector of length ${c_dimRef('C = 48', DimStyle.C)}.`;
+Her head'den ${c_blockRef('çıktı vektörlerini', outBlocks)} birleştirmek için, bunları basitçe üst üste yığıyoruz. Yani,
+${c_dimRef('t = 4', DimStyle.T)} zamanı için, ${c_dimRef('A = 16', DimStyle.A)} uzunluğunda 3 vektörden ${c_dimRef('C = 48', DimStyle.C)} uzunluğunda 1 vektöre gidiyoruz.`;
 
     breakAfter();
 
@@ -35,11 +35,11 @@ ${c_dimRef('t = 4', DimStyle.T)}, we go from 3 vectors of length ${c_dimRef('A =
 
     commentary(wt)`
 
-It's worth noting that in GPT, the length of the vectors within a head (${c_dimRef('A = 16', DimStyle.A)}) is equal to ${c_dimRef('C', DimStyle.C)} / num_heads.
-This ensures that when we stack them back together, we get the original length, ${c_dimRef('C', DimStyle.C)}.
+GPT'de bir head içindeki vektörlerin uzunluğunun (${c_dimRef('A = 16', DimStyle.A)}), ${c_dimRef('C', DimStyle.C)} / num_heads'e eşit olduğunu belirtmekte fayda var.
+Bu, onları tekrar bir araya yığdığımızda, orijinal uzunluğu ${c_dimRef('C', DimStyle.C)} elde etmemizi sağlar.
 
-From here, we perform the projection to get the output of the layer. This is a simple matrix-vector
-multiplication on a per-column basis, with a bias added.`;
+Buradan, katmanın çıktısını elde etmek için projeksiyon gerçekleştiriyoruz. Bu, sütun bazında basit bir matris-vektör
+çarpımıdır ve bir bias eklenir.`;
 
     breakAfter();
 
@@ -49,9 +49,9 @@ multiplication on a per-column basis, with a bias added.`;
 
     commentary(wt)`
 
-Now we have the output of the self-attention layer. Instead of passing this output directly to the
-next phase, we add it element-wise to the input embedding. This process, denoted by the green
-vertical arrow, is called the _residual connection_ or _residual pathway_.
+Şimdi self-attention katmanının çıktısına sahibiz. Bu çıktıyı doğrudan bir sonraki
+aşamaya geçirmek yerine, onu input embedding'e eleman bazında ekliyoruz. Yeşil
+dikey ok ile gösterilen bu işlem, _residual connection_ (artık bağlantı) veya _residual pathway_ (artık yolu) olarak adlandırılır.
 `;
 
     breakAfter();
@@ -65,11 +65,11 @@ vertical arrow, is called the _residual connection_ or _residual pathway_.
 
     commentary(wt)`
 
-Like layer normalization, the residual pathway is important for enabling effective learning in deep
-neural networks.
+Layer normalization gibi, residual pathway de derin
+sinir ağlarında etkili öğrenmeyi mümkün kılmak için önemlidir.
 
-Now with the result of self-attention in hand, we can pass it onto the next section of the transformer:
-the feed-forward network.
+Şimdi self-attention'ın sonucuyla birlikte, onu transformer'ın bir sonraki bölümüne geçirebiliriz:
+feed-forward ağ.
 `;
 
     breakAfter();

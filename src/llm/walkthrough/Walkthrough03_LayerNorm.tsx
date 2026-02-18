@@ -24,10 +24,10 @@ export function walkthrough03_LayerNorm(args: IWalkthroughArgs) {
 
     commentary(wt, null, 0)`
 
-The  ${c_blockRef('_input embedding_', state.layout.residual0)} matrix from the previous section is the input to our first Transformer block.
+Önceki bölümdeki ${c_blockRef('_input embedding_', state.layout.residual0)} matrisi, ilk Transformer bloğumuzun girdisidir.
 
-The first step in the Transformer block is to apply _layer normalization_ to this matrix. This is an
-operation that normalizes the values in each column of the matrix separately.`;
+Transformer bloğundaki ilk adım, bu matrise _layer normalization_ uygulamaktır. Bu,
+matrisin her sütunundaki değerleri ayrı ayrı normalize eden bir işlemdir.`;
     breakAfter();
 
     let t_moveCamera = afterTime(null, 1.0);
@@ -37,10 +37,10 @@ operation that normalizes the values in each column of the matrix separately.`;
 
     breakAfter();
     commentary(wt)`
-Normalization is an important step in the training of deep neural networks, and it helps improve the
-stability of the model during training.
+Normalizasyon, derin sinir ağlarının eğitiminde önemli bir adımdır ve training sırasında modelin
+kararlılığını artırmaya yardımcı olur.
 
-We can regard each column separately, so let's focus on the 4th column (${c_dimRef('t = 3', DimStyle.T)}) for now.`;
+Her sütunu ayrı ayrı ele alabiliriz, bu yüzden şimdilik 4. sütuna (${c_dimRef('t = 3', DimStyle.T)}) odaklanalım.`;
 
     breakAfter();
     let t_focusColumn = afterTime(null, 0.5);
@@ -49,8 +49,8 @@ We can regard each column separately, so let's focus on the 4th column (${c_dimR
     // sigma ascii: \u03c3
     breakAfter();
     commentary(wt)`
-The goal is to make the average value in the column equal to 0 and the standard deviation equal to 1. To do this,
-we find both of these quantities (${c_blockRef('mean (\u03bc)', ln.lnAgg1)} & ${c_blockRef('std dev (\u03c3)', ln.lnAgg2)}) for the column and then subtract the average and divide by the standard deviation.`;
+Amaç, sütundaki ortalama değeri 0 ve standart sapmayı 1 yapmaktır. Bunu yapmak için,
+bu iki miktarı (${c_blockRef('ortalama (\u03bc)', ln.lnAgg1)} & ${c_blockRef('standart sapma (\u03c3)', ln.lnAgg2)}) sütun için buluyoruz ve sonra ortalamayı çıkarıp standart sapmaya bölüyoruz.`;
 
     breakAfter();
 
@@ -61,13 +61,13 @@ we find both of these quantities (${c_blockRef('mean (\u03bc)', ln.lnAgg1)} & ${
 
     breakAfter();
     commentary(wt)`
-The notation we use here is E[x] for the average and Var[x] for the variance (of the column of length ${c_dimRef('C', DimStyle.C)}). The
-variance is simply the standard deviation squared. The epsilon term (ε = ${<>1&times;10<sup>-5</sup></>}) is there to prevent division by zero.
+Burada kullandığımız notasyon ortalama için E[x] ve varyans için Var[x]'dir (${c_dimRef('C', DimStyle.C)} uzunluğundaki sütunun).
+Varyans, basitçe standart sapmanın karesidir. Epsilon terimi (ε = ${<>1&times;10<sup>-5</sup></>}) sıfıra bölmeyi önlemek içindir.
 
-We compute and store these values in our aggregation layer since we're applying them to all values in the column.
+Bu değerleri hesaplayıp aggregation (toplama) katmanımızda saklıyoruz çünkü bunları sütundaki tüm değerlere uyguluyoruz.
 
-Finally, once we have the normalized values, we multiply each element in the column by a learned
-${c_blockRef('weight (\u03b3)', ln.lnSigma)} and then add a ${c_blockRef('bias (β)', ln.lnMu)} value, resulting in our ${c_blockRef('normalized values', ln.lnResid)}.`;
+Son olarak, normalize edilmiş değerlere sahip olduğumuzda, sütundaki her elemanı öğrenilmiş bir
+${c_blockRef('weight (\u03b3)', ln.lnSigma)} ile çarpıyor ve sonra bir ${c_blockRef('bias (β)', ln.lnMu)} değeri ekliyoruz, bu da ${c_blockRef('normalize edilmiş değerler', ln.lnResid)}i veriyor.`;
 
     breakAfter();
 
@@ -77,8 +77,8 @@ ${c_blockRef('weight (\u03b3)', ln.lnSigma)} and then add a ${c_blockRef('bias (
 
     breakAfter();
     commentary(wt)`
-We run this normalization operation on each column of the ${c_blockRef('input embedding matrix', layout.residual0)}, and the result is
-the ${c_blockRef('normalized input embedding', ln.lnResid)}, which is ready to be passed into the Self-Attention layer.
+Bu normalizasyon işlemini ${c_blockRef('input embedding matrisi', layout.residual0)}'nin her sütununda çalıştırıyoruz ve sonuç,
+Self-Attention katmanına geçirilmeye hazır ${c_blockRef('normalize edilmiş input embedding', ln.lnResid)}'dir.
 `;
 
     breakAfter();

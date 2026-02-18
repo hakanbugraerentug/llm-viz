@@ -85,23 +85,23 @@ export function initWalkthrough() {
         phaseTransitiveData: null as any,
         phaseList: [{
             groupId: PhaseGroup.Intro,
-            title: 'Introduction',
+            title: 'Giriş',
             phases: [
-                { id: Phase.Intro_Intro, title: 'Overview' },
-                { id: Phase.Intro_Prelim, title: 'Preliminary' },
+                { id: Phase.Intro_Intro, title: 'Genel Bakış' },
+                { id: Phase.Intro_Prelim, title: 'Ön Bilgi' },
             ],
         }, {
             groupId: PhaseGroup.Detailed_Input,
-            title: 'Detailed',
+            title: 'Detaylı',
             phases: [
                 { id: Phase.Input_Detail_Embedding, title: 'Embedding' },
                 { id: Phase.Input_Detail_LayerNorm, title: 'Layer Norm' },
                 { id: Phase.Input_Detail_SelfAttention, title: 'Self Attention' },
-                { id: Phase.Input_Detail_Projection, title: 'Projection' },
+                { id: Phase.Input_Detail_Projection, title: 'Projeksiyon' },
                 { id: Phase.Input_Detail_Mlp, title: 'MLP' },
                 { id: Phase.Input_Detail_Transformer, title: 'Transformer' },
                 { id: Phase.Input_Detail_Softmax, title: 'Softmax' },
-                { id: Phase.Input_Detail_Output, title: 'Output' },
+                { id: Phase.Input_Detail_Output, title: 'Çıktı' },
             ],
         }] as IPhaseGroup[],
     };
@@ -201,7 +201,7 @@ export function walkthroughDetailed(args: IWalkthroughArgs) {
 
     case Phase.Input_First: {
         let t0 = c_str('', 0);
-        let c = commentary`These vectors now pass through the stages of the model, going through a series of transformers.${t0}`;
+        let c = commentary`Bu vektörler artık modelin aşamalarından geçerek bir dizi transformer'dan geçiyor.${t0}`;
         let t1 = atEvent(t0);
         let t1a = afterTime(t1, 0.0, 2.0);
         let t2 = afterTime(t1a, 5, 0.2);
@@ -243,14 +243,14 @@ export function walkthroughDetailed(args: IWalkthroughArgs) {
         t0_showAll.t = 1.0;
 
         let tokEmbed = layout.tokEmbedObj;
-        drawTextOnModel(render, 'token-embedding matrix', new Vec3(tokEmbed.x - layout.margin, tokEmbed.y + tokEmbed.dy / 4, 0), {
+        drawTextOnModel(render, 'token-embedding matrisi', new Vec3(tokEmbed.x - layout.margin, tokEmbed.y + tokEmbed.dy / 4, 0), {
             align: TextAlignHoriz.Right,
             valign: TextAlignVert.Middle,
             color: new Vec4(0,0,0,1).mul(t0_showAll.t),
             size: 3,
         });
         let posEmbed = layout.posEmbedObj;
-        drawTextOnModel(render, 'position-embedding matrix', new Vec3(posEmbed.x + posEmbed.dx + layout.margin, tokEmbed.y + tokEmbed.dy / 4, 0), {
+        drawTextOnModel(render, 'position-embedding matrisi', new Vec3(posEmbed.x + posEmbed.dx + layout.margin, tokEmbed.y + tokEmbed.dy / 4, 0), {
             align: TextAlignHoriz.Left,
             valign: TextAlignVert.Middle,
             color: new Vec4(0,0,0,1).mul(t0_showAll.t),
@@ -269,7 +269,7 @@ export function walkthroughDetailed(args: IWalkthroughArgs) {
     } break;
     case Phase.Input_Detail_TokEmbed: {
         let tStr = c_str('t', 1);
-        let c = commentary`Let's start at the top. To compute the vectors at each time ${tStr} we do a couple of steps:`;
+        let c = commentary`Üstten başlayalım. Her bir ${tStr} zamanındaki vektörleri hesaplamak için birkaç adım uyguluyoruz:`;
 
         moveCameraTo(state, atTime(0), new Vec3(0, 0, 0), new Vec3());
 
@@ -298,9 +298,9 @@ export function walkthroughDetailed(args: IWalkthroughArgs) {
             splitGrid(layout, layout.idxObj   , Dim.X, idx + 0.5, split);
         }
 
-        let embedMtx = c_str('token embedding matrix');
+        let embedMtx = c_str('token embedding matrisi');
         let tokCol = c_str('j');
-        commentaryPara(c)`\n\n1. From the ${embedMtx}, select the ${tokCol}'th column.`;
+        commentaryPara(c)`\n\n1. ${embedMtx}'nden ${tokCol}'inci sütunu seç.`;
 
         let embedOffColor = new Vec4(0.5,0.5,0.5).mul(0.6);
 

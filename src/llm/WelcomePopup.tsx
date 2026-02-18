@@ -53,7 +53,7 @@ export const WelcomePopup: React.FC<{}> = () => {
 
     return <ModalWindow className={s.modalWindow} backdropClassName={s.modalWindowBackdrop} onBackdropClick={hide}>
         <div className={s.header}>
-            <div className={s.title}>Welcome!</div>
+            <div className={s.title}>Hoş Geldiniz!</div>
         </div>
         <div className={s.body}>
             {/* <div className={s.image}>
@@ -63,17 +63,16 @@ export const WelcomePopup: React.FC<{}> = () => {
                 <TocDiagram activePhase={null} onEnterPhase={hide} />
             </div>
             <div className={s.text}>
-                <p>This is an interactive 3D Visualization of a Large Language Model (LLM),
-                    of the likes that powers GPT-3 & ChatGPT.</p>
-                <p>We show a very small model of the same design, to help you understand how
-                    these models work.</p>
-                <p>As well as being interactive, we provide a walkthrough of the model
-                    showing the step-by-step process of how it works, with every single add, multiply &
-                    math operation described.</p>
+                <p>Bu, GPT-3 ve ChatGPT gibi sistemleri güçlendiren Büyük Dil Modeli'nin (LLM)
+                    interaktif bir 3D görselleştirmesidir.</p>
+                <p>Bu modellerin nasıl çalıştığını anlamanıza yardımcı olmak için aynı tasarıma sahip
+                    çok küçük bir model gösteriyoruz.</p>
+                <p>İnteraktif olmasının yanı sıra, modelin adım adım nasıl çalıştığını gösteren,
+                    her bir toplama, çarpma ve matematiksel işlemin açıklandığı bir kılavuz sunuyoruz.</p>
             </div>
         </div>
         <div className={s.footer}>
-            <button className={s.button} onClick={hide}>Get Started</button>
+            <button className={s.button} onClick={hide}>Başla</button>
         </div>
     </ModalWindow>;
 };
