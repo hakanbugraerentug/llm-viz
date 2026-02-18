@@ -79,7 +79,9 @@ ve sonra sonuçları topluyoruz.`;
     breakAfter();
     commentary(wt)`
 
-Bu, her çıktı elemanının giriş vektöründeki tüm elemanlardan etkilenebilmesini sağlamanın genel ve basit bir yoludur (bu etkinin weight'ler tarafından belirlendiği durumlarda). Bu yüzden sinir ağlarında sık sık görülür.
+Bu, her çıktı elemanının giriş vektöründeki tüm elemanlardan etkilenebilmesini sağlamanın genel ve basit bir yoludur (bu etkinin weight'ler tarafından belirlendiği durumlarda). 
+
+Bu yüzden sinir ağlarında sık sık görülür.
 
 Bu işlemi Q, K, V vektörlerindeki her çıktı hücresi için tekrarlıyoruz:`;
     breakAfter();
