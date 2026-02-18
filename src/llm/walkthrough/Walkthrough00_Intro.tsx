@@ -58,10 +58,10 @@ export function walkthroughIntro(args: IWalkthroughArgs) {
 
     setInitialCamera(state, new Vec3(184.744, 0.000, -636.820), new Vec3(296.000, 16.000, 13.500));
 
-    let c0 = commentary(wt, null, 0)`Welcome to the walkthrough of the GPT large language model! Here we'll explore the model _nano-gpt_, with a mere 85,000 parameters.
+    let c0 = commentary(wt, null, 0)`GPT büyük dil modeli kılavuzuna hoş geldiniz! Burada sadece 85.000 parametreye sahip _nano-gpt_ modelini keşfedeceğiz.
 
-Its goal is a simple one: take a sequence of six letters: ${embed(ExampleInputOutput)}
-and sort them in alphabetical order, i.e. to "ABBBCC".`;
+Hedefi basittir: altı harflik bir diziyi alın: ${embed(ExampleInputOutput)}
+ve bunları alfabetik sıraya göre sıralayın, yani "ABBBCC" haline getirin.`;
 
     if (c0.t > 0) {
         for (let cube of layout.cubes) {
@@ -94,11 +94,11 @@ and sort them in alphabetical order, i.e. to "ABBBCC".`;
     breakAfter();
 
     let tokenStr = c_str('_token_', 0, DimStyle.Token);
-    let tokenIdxStr = c_str('_token index_', 0, DimStyle.TokenIdx);
+    let tokenIdxStr = c_str('_token indeksi_', 0, DimStyle.TokenIdx);
 
-    commentary(wt, t6)`We call each of these letters a ${tokenStr}, and the set of the model's different tokens make up its _vocabulary_:${embed(TokenVocab)}
+    commentary(wt, t6)`Bu harflerin her birine ${tokenStr} diyoruz ve modelin farklı token'larının kümesi onun _kelime dağarcığını_ oluşturur:${embed(TokenVocab)}
 
-    From this table, each token is assigned a number, its ${tokenIdxStr}. And now we can enter this sequence of numbers into the model:${embed(ExampleTokenValues)}\n`;
+    Bu tablodan, her token'a bir sayı, yani ${tokenIdxStr} atanır. Ve şimdi bu sayı dizisini modele girebiliriz:${embed(ExampleTokenValues)}\n`;
     breakAfter();
 
     let t7 = afterTime(null, 1.5, 0.5);
@@ -129,8 +129,8 @@ and sort them in alphabetical order, i.e. to "ABBBCC".`;
 
     breakAfter();
 
-    let c5 = commentary(wt)`In the 3d view, each green cell represents a number being processed, and each blue cell is a weight. ${embed(GreenBlueCells)}
-    Each number in the sequence first gets turned into a 48 element vector (a size chosen for this particular model). This is called an _embedding_.`;
+    let c5 = commentary(wt)`3D görünümde, her yeşil hücre işlenen bir sayıyı, her mavi hücre ise bir weight'i (ağırlığı) temsil eder. ${embed(GreenBlueCells)}
+    Dizideki her sayı önce 48 elemanlı bir vektöre dönüştürülür (bu model için seçilmiş bir boyut). Buna _embedding_ denir.`;
     breakAfter(c5);
 
     {
@@ -166,7 +166,7 @@ and sort them in alphabetical order, i.e. to "ABBBCC".`;
     }
 
     breakAfter();
-    commentary(wt)`The embedding is then passed through the model, going through a series of layers, called transformers, before reaching the bottom.`;
+    commentary(wt)`Embedding daha sonra modelden geçirilir, transformer adı verilen bir dizi katmandan geçerek alta ulaşır.`;
     breakAfter();
 
     {
@@ -220,11 +220,11 @@ and sort them in alphabetical order, i.e. to "ABBBCC".`;
         }
     }
 
-    commentary(wt)`So what's the output? A prediction of the next token in the sequence. So at the 6th entry, we get probabilities that the next token is
-        going to be 'A', 'B', or 'C'.`
+    commentary(wt)`Peki çıktı nedir? Dizideki bir sonraki token'ın tahmini. Yani 6. girişte, bir sonraki token'ın
+        'A', 'B' veya 'C' olma olasılıklarını elde ederiz.`
 
-    commentary(wt)`In this case, the model is pretty sure it's going to be 'A'. Now, we can feed this prediction back into the top of the model, and repeat
-    the entire process.`;
+    commentary(wt)`Bu durumda, model bunun 'A' olacağından oldukça emin. Şimdi bu tahmini modelin tepesine geri besleyebilir ve
+    tüm süreci tekrarlayabiliriz.`;
 
     breakAfter();
 }
@@ -396,7 +396,7 @@ const TokenVocab: React.FC = () => {
                     <th>token</th><td>A</td><td>B</td><td>C</td>
                 </tr>
                 <tr className={s.tokIndex} style={{ color: dimStyleColor(DimStyle.TokenIdx).toHexColor() }}>
-                    <th>index</th><td>0</td><td>1</td><td>2</td>
+                    <th>indeks</th><td>0</td><td>1</td><td>2</td>
                 </tr>
             </tbody>
         </table>
@@ -416,12 +416,12 @@ const GreenBlueCells: React.FC = () => {
             <div className={s.cellInfoCol}>
                 <Cell nums={greenNums} color={greenColor} mul={0.5} />
                 <Graph nums={greenNums} color={greenColor} setNums={setGreenNums} />
-                <div className={s.cellInfoText}>being processed</div>
+                <div className={s.cellInfoText}>işleniyor</div>
             </div>
             <div className={s.cellInfoCol}>
                 <Cell nums={blueNums} color={blueColor} mul={1} />
                 <Graph nums={blueNums} color={blueColor} setNums={setBlueNums} />
-                <div className={s.cellInfoText}>weights</div>
+                <div className={s.cellInfoText}>weight'ler</div>
             </div>
         </div>
     </div>

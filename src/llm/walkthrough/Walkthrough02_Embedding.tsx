@@ -21,11 +21,11 @@ export function walkthrough02_Embedding(args: IWalkthroughArgs) {
     wt.dimHighlightBlocks = [layout.idxObj, layout.tokEmbedObj, layout.posEmbedObj, layout.residual0];
 
     commentary(wt)`
-We saw previously how the tokens are mapped to a sequence of integers using a simple lookup table.
-These integers, the ${c_blockRef('_token indices_', state.layout.idxObj, DimStyle.TokenIdx)}, are the first and only time we see integers in the model.
-From here on out, we're using floats (decimal numbers).
+Daha önce token'ların basit bir arama tablosu kullanarak nasıl bir tamsayı dizisine eşlendiğini gördük.
+Bu tamsayılar, ${c_blockRef('_token indeksleri_', state.layout.idxObj, DimStyle.TokenIdx)}, modelde tamsayıları gördüğümüz ilk ve tek zamandır.
+Bundan sonra, float'lar (ondalık sayılar) kullanıyoruz.
 
-Let's take a look at how the 4th token (index 3) is used to generate the 4th column vector of our ${c_blockRef('_input embedding_', state.layout.residual0)}.`;
+4. token'ın (indeks 3) ${c_blockRef('_input embedding_', state.layout.residual0)}'imizin 4. sütun vektörünü oluşturmak için nasıl kullanıldığına bir göz atalım.`;
     breakAfter();
 
     let t_moveCamera = afterTime(null, 1.0);
@@ -34,10 +34,10 @@ Let's take a look at how the 4th token (index 3) is used to generate the 4th col
     breakAfter();
 
     commentary(wt)`
-We use the token index (in this case ${c_str('B', DimStyle.Token)} = ${c_dimRef('1', DimStyle.TokenIdx)}) to select the 2nd column of the ${c_blockRef('_token embedding matrix_', state.layout.tokEmbedObj)} on the left.
-Note we're using 0-based indexing here, so the first column is at index 0.
+Token indeksini (bu durumda ${c_str('B', DimStyle.Token)} = ${c_dimRef('1', DimStyle.TokenIdx)}) soldaki ${c_blockRef('_token embedding matrisi_', state.layout.tokEmbedObj)}'nin 2. sütununu seçmek için kullanıyoruz.
+Burada 0 tabanlı indeksleme kullandığımızı unutmayın, yani ilk sütun 0 indeksindedir.
 
-This produces a column vector of size ${c_dimRef('_C_ = 48', DimStyle.C)}, which we describe as the token embedding.
+Bu, token embedding olarak tanımladığımız ${c_dimRef('_C_ = 48', DimStyle.C)} boyutunda bir sütun vektörü üretir.
     `;
     breakAfter();
 
@@ -47,9 +47,9 @@ This produces a column vector of size ${c_dimRef('_C_ = 48', DimStyle.C)}, which
     breakAfter();
 
     commentary(wt)`
-And since we're looking at our token ${c_str('B', DimStyle.Token)} in the 4th _position_ (t = ${c_dimRef('3', DimStyle.T)}), we'll take the 4th column of the ${c_blockRef('_position embedding matrix_', state.layout.posEmbedObj)}.
+Ve token'ımız ${c_str('B', DimStyle.Token)}'ye 4. _pozisyonda_ (t = ${c_dimRef('3', DimStyle.T)}) baktığımız için, ${c_blockRef('_position embedding matrisi_', state.layout.posEmbedObj)}'nin 4. sütununu alacağız.
 
-This also produces a column vector of size ${c_dimRef('_C_ = 48', DimStyle.C)}, which we describe as the position embedding.
+Bu da position embedding olarak tanımladığımız ${c_dimRef('_C_ = 48', DimStyle.C)} boyutunda bir sütun vektörü üretir.
     `;
     breakAfter();
 
@@ -58,9 +58,9 @@ This also produces a column vector of size ${c_dimRef('_C_ = 48', DimStyle.C)}, 
     breakAfter();
 
     commentary(wt)`
-Note that both of these position and token embeddings are learned during training (indicated by their blue color).
+Bu position ve token embedding'lerinin her ikisinin de training sırasında öğrenildiğini unutmayın (mavi renkleriyle gösterilir).
 
-Now that we have these two column vectors, we simply add them together to produce another column vector of size ${c_dimRef('_C_ = 48', DimStyle.C)}.
+Şimdi bu iki sütun vektörüne sahip olduğumuza göre, bunları basitçe toplayarak ${c_dimRef('_C_ = 48', DimStyle.C)} boyutunda başka bir sütun vektörü üretiriz.
 `;
 
     breakAfter();
@@ -76,7 +76,7 @@ Now that we have these two column vectors, we simply add them together to produc
     breakAfter();
 
     commentary(wt)`
-We now run this same process for all of the tokens in the input sequence, creating a set of vectors which incorporate both the token values and their positions.
+Şimdi bu süreci giriş dizisindeki tüm token'lar için çalıştırarak, hem token değerlerini hem de pozisyonlarını içeren bir vektör kümesi oluşturuyoruz.
 
 `;
 
@@ -87,15 +87,15 @@ We now run this same process for all of the tokens in the input sequence, creati
     breakAfter();
 
     commentary(wt)`
-Feel free to hover over individual cells on the ${c_blockRef('_input embedding_', state.layout.residual0)} matrix to see the computations and their sources.
+Hesaplamaları ve kaynaklarını görmek için ${c_blockRef('_input embedding_', state.layout.residual0)} matrisindeki tek tek hücrelerin üzerine gelmekten çekinmeyin.
 
-We see that running this process for all the tokens in the input sequence produces a matrix of size ${c_dimRef('_T_', DimStyle.T)} x ${c_dimRef('_C_', DimStyle.C)}.
-The ${c_dimRef('_T_', DimStyle.T)} stands for ${c_dimRef('_time_', DimStyle.T)}, i.e., you can think of tokens later in the sequence as later in time.
-The ${c_dimRef('_C_', DimStyle.C)} stands for ${c_dimRef('_channel_', DimStyle.C)}, but is also referred to as "feature" or "dimension" or "embedding size". This length, ${c_dimRef('_C_', DimStyle.C)},
-is one of the several "hyperparameters" of the model, and is chosen by the designer to in a tradeoff between model size and performance.
+Giriş dizisindeki tüm token'lar için bu işlemi çalıştırmanın ${c_dimRef('_T_', DimStyle.T)} x ${c_dimRef('_C_', DimStyle.C)} boyutunda bir matris ürettiğini görüyoruz.
+${c_dimRef('_T_', DimStyle.T)}, ${c_dimRef('_time_', DimStyle.T)} (zaman) anlamına gelir, yani dizide daha sonraki token'ları zamanda daha sonra olarak düşünebilirsiniz.
+${c_dimRef('_C_', DimStyle.C)}, ${c_dimRef('_channel_', DimStyle.C)} (kanal) anlamına gelir, ancak "feature" (özellik), "dimension" (boyut) veya "embedding size" (embedding boyutu) olarak da adlandırılır. Bu uzunluk, ${c_dimRef('_C_', DimStyle.C)},
+modelin birkaç "hiperparametresinden" biridir ve tasarımcı tarafından model boyutu ve performans arasındaki bir ödünleşim içinde seçilir.
 
-This matrix, which we'll refer to as the ${c_blockRef('_input embedding_', state.layout.residual0)} is now ready to be passed down through the model.
-This collection of ${c_dimRef('T', DimStyle.T)} columns each of length ${c_dimRef('C', DimStyle.C)} will become a familiar sight throughout this guide.
+${c_blockRef('_input embedding_', state.layout.residual0)} olarak adlandıracağımız bu matris, artık modelden aşağıya doğru geçirilmeye hazırdır.
+Her biri ${c_dimRef('C', DimStyle.C)} uzunluğunda ${c_dimRef('T', DimStyle.T)} sütundan oluşan bu koleksiyon, bu kılavuz boyunca tanıdık bir görüntü haline gelecektir.
 `;
 
     cleanup(t9_cleanupInstant, [t3_moveTokenEmbed, t5_movePosEmbed, t6_plusSymAnim, t7_addAnim, t8_placeAnim]);
