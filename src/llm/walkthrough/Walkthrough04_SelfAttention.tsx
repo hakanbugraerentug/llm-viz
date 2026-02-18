@@ -31,11 +31,12 @@ export function walkthrough04_SelfAttention(args: IWalkthroughArgs) {
     wt.dimHighlightBlocks = [layout.residual0, block0.ln1.lnResid, ...head2.cubes];
 
     commentary(wt, null, 0)`
-The self-attention layer is perhaps the heart of the Transformer and of GPT. It's the phase where the
-columns in our input embedding matrix "talk" to each other. Up until now, and in all other phases,
-the columns can be regarded independently.
+Self-attention katmanı, Transformer'ın ve GPT'nin belki de kalbidir. Bu, giriş embedding matrisindeki
+ sütunların birbirleriyle "konuştuğu" aşamadır. Şimdiye kadar ve diğer tüm aşamalarda sütunlar 
+ birbirinden bağımsız olarak değerlendirilebiliyordu.
 
-The self-attention layer is made up of several heads, and we'll focus on one of them for now.`;
+Self-attention katmanı birden fazla head'den oluşur ve şimdilik bunlardan birine odaklanacağız.
+`;
     breakAfter();
     let t_moveCamera = afterTime(null, 1.0);
     let t_highlightHeads = afterTime(null, 2.0);
