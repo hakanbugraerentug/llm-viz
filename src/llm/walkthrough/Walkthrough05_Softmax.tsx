@@ -13,46 +13,46 @@ export function walkthrough05_Softmax(args: IWalkthroughArgs) {
 
     let c0 = commentary(wt, null, 0)`
 
-The softmax operation is used as part of self-attention, as seen in the previous section, and it
-will also appear at the very end of the model.
+Softmax işlemi, önceki bölümde gördüğümüz gibi self-attention'ın bir parçası olarak kullanılır ve
+modelin en sonunda da ortaya çıkacaktır.
 
-Its goal is to take a vector and normalize its values so that they sum to 1.0. However, it's not as
-simple as dividing by the sum. Instead, each input value is first exponentiated.
+Hedefi, bir vektörü alıp değerlerini toplama 1.0 olacak şekilde normalize etmektir. Ancak, basitçe
+toplama bölmek kadar basit değildir. Bunun yerine, her giriş değeri önce üstellendirilir.
 
   a = exp(x_1)
 
-This has the effect of making all values positive. Once we have a vector of our exponentiated
-values, we can then divide each value by the sum of all the values. This will ensure that the sum
-of the values is 1.0. Since all the exponentiated values are positive, we know that the resulting
-values will be between 0.0 and 1.0, which provides a probability distribution over the original values.
+Bu, tüm değerleri pozitif yapma etkisine sahiptir. Üstel değerlerimizin bir vektörüne sahip olduğumuzda,
+her değeri tüm değerlerin toplamına bölebiliriz. Bu, değerlerin toplamının 1.0 olmasını sağlayacaktır.
+Tüm üstel değerler pozitif olduğu için, sonuç değerlerin 0.0 ile 1.0 arasında olacağını biliyoruz, bu da
+orijinal değerler üzerinde bir olasılık dağılımı sağlar.
 
-That's it for softmax: simply exponentiate the values and then divide by the sum.
+Softmax için işte bu kadar: basitçe değerleri üstel hale getirin ve sonra toplama bölün.
 
-However, there's a slight complication. If any of the input values are quite large, then the
-exponentiated values will be very large. We'll end up dividing a large number by a very large number,
-and this can cause issues with floating-point arithmetic.
+Ancak, küçük bir komplikasyon var. Giriş değerlerinden herhangi biri oldukça büyükse, üstel
+değerler çok büyük olacaktır. Büyük bir sayıyı çok büyük bir sayıya böleceğiz
+ve bu, kayan noktalı aritmetikte sorunlara neden olabilir.
 
-One useful property of the softmax operation is that if we add a constant to all the input values,
-the result will be the same. So we can find the largest value in the input vector and subtract it
-from all the values. This ensures that the largest value is 0.0, and the softmax remains numerically
-stable.
+Softmax işleminin yararlı bir özelliği, tüm giriş değerlerine bir sabit eklersek,
+sonucun aynı olacağıdır. Bu nedenle giriş vektöründeki en büyük değeri bulabilir ve tüm değerlerden
+çıkarabiliriz. Bu, en büyük değerin 0.0 olmasını sağlar ve softmax sayısal olarak
+kararlı kalır.
 
-Let's take a look at the softmax operation in the context of the self-attention layer. Our input
-vector for each softmax operation is a row of the self-attention matrix (but only up to the diagonal).
+Softmax işlemine self-attention katmanı bağlamında bir göz atalım. Her softmax işlemi için giriş
+vektörümüz, self-attention matrisinin bir satırıdır (ancak sadece köşegene kadar).
 
-Like with layer normalization, we have an intermediate step where we store some aggregation values
-to keep the process efficient.
+Layer normalization'da olduğu gibi, süreci verimli tutmak için bazı aggregation değerlerini
+sakladığımız bir ara adımımız var.
 
-For each row, we store the max value in the row and the sum of the shifted & exponentiated values.
-Then, to produce the corresponding output row, we can perform a small set of operations: subtract the
-max, exponentiate, and divide by the sum.
+Her satır için, satırdaki maksimum değeri ve kaydırılmış & üstel hale getirilmiş değerlerin toplamını saklıyoruz.
+Sonra, karşılık gelen çıktı satırını üretmek için küçük bir işlem seti gerçekleştirebiliriz: maksimumu çıkar,
+üstel hale getir ve toplama böl.
 
-What's with the name "softmax"? The "hard" version of this operation, called argmax, simply finds
-the maximum value, sets it to 1.0, and assigns 0.0 to all other values. In contrast, the softmax
-operation serves as a "softer" version of that. Due to the exponentiation involved in softmax, the
-largest value is emphasized and pushed towards 1.0, while still maintaining a probability distribution
-over all input values. This allows for a more nuanced representation that captures not only the most
-likely option but also the relative likelihood of other options.
+"Softmax" adı neyin nesi? Bu işlemin "hard" (sert) versiyonu, argmax olarak adlandırılır, sadece
+maksimum değeri bulur, onu 1.0'a ayarlar ve diğer tüm değerlere 0.0 atar. Bunun aksine, softmax
+işlemi bunun "daha yumuşak" bir versiyonu olarak hizmet eder. Softmax'taki üssellendirme nedeniyle,
+en büyük değer vurgulanır ve 1.0'a doğru itilirken, tüm giriş değerleri üzerinde hala bir olasılık dağılımı
+korunur. Bu, sadece en olası seçeneği değil, aynı zamanda diğer seçeneklerin göreceli olasılığını da
+yakalayan daha nüanslı bir temsil sağlar.
 `;
 
 }

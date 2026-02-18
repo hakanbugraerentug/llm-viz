@@ -77,12 +77,12 @@ export const HomePage: React.FC = () => {
                     <div className={s.cardTitle}>
                         <Link href={"/llm"}>
                         {/* rel="noopener noreferrer" target="_blank"> */}
-                            LLM Visualization
+                            LLM Görselleştirme
                         </Link>
                     </div>
                     <div className={s.cardText}>
-                        A visualization and walkthrough of the LLM algorithm that backs OpenAI's ChatGPT.
-                        Explore the algorithm down to every add & multiply, seeing the whole process in action.
+                        OpenAI'nin ChatGPT'sini destekleyen LLM algoritmasının bir görselleştirmesi ve kılavuzu.
+                        Algoritmanın her toplama ve çarpımına kadar tüm süreci görerek keşfedin.
                     </div>
                 </div>
             </div>
